@@ -1,6 +1,19 @@
 import tkinter as tk
 import tkinter.messagebox as mg
 
+# major important modules
+from transformers import pipeline,DistilBertTokenizer,DistilBertForSequenceClassification
+
+# tokenizer and model
+tokenizer = DistilBertTokenizer.from_pretrained('distilbert-base-uncased')
+model = DistilBertForSequenceClassification.from_pretrained('distilbert-base-uncased-finetuned-sst-2-english')
+
+# for sentiments [POSITIVE,NEGATIVE]
+analyzer = pipeline('sentiment-analysis',model = model,tokenizer = tokenizer)
+
+# for emotions detection
+emotion_analyzer = pipeline('text-classification',model = 'j-hartmann/emotion-english-distilroberta-base')
+
 w1 = tk.Tk()
 w1.title("Sentiment-Analyzer")
 w1.geometry('400x220')
@@ -8,7 +21,7 @@ w1.resizable(False,False)
 w1.config(background = '#d9d9d9')
 
 # general message when the Application starts
-# mg.showinfo('Application General Information','It is general notice regarding the Application that it is used for getting the score Sentiment and Emotion calculated after you give your text based content in the input prompt.')
+mg.showinfo('Application General Information','It is general notice regarding the Application that it is used for getting the score Sentiment and Emotion calculated after you give your text based content in the input prompt.')
 
 # creating a label here
 lb1 = tk.Label(w1,text = 'Sentiment Analyzer',font = ('Bitstream Charter',15,'bold'))
@@ -28,10 +41,17 @@ def doThis():
     w2.resizable(False,False)
 
     # initiative label
-    wlb1 = tk.Label(w2,text = "Analysed Sentiment",font = ('Bitstream Charter',12,'bold'))
+    wlb1 = tk.Label(w2,text = "Analysed Sentiment",font = ('Bitstream Charter',13,'bold'))
     wlb1.pack(padx = 2,pady = 5)
 
+    result = analyzer(e1.get())
+    emotion = emotion_analyzer(e1.get())
+
     # final detailed label
+    final_output = 'Your Sentiment Label : {0}\nYour Sentiment Score : {1}%\nYour emotion : {2}'.format(result[0]['label'],int(result[0]['score'] * 100),(emotion[0]['label'].capitalize()))
+
+    wlb2 = tk.Label(w2,anchor = tk.CENTER,text = final_output,font = ('Bitstream Charter',10))
+    wlb2.pack(padx = 2,pady = 2)
 
     # ending of the window
     w2.mainloop()
