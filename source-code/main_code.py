@@ -20,7 +20,21 @@ e1.pack(padx = 2,pady = 5)
 
 # function's or Method's Block to be used as a command afterwards
 def doThis():
-    pass
+    
+    # initiating the second window
+    w2 = tk.Tk()
+    w2.title("Analysed Sentiment")
+    w2.geometry('300x150')
+    w2.resizable(False,False)
+
+    # initiative label
+    wlb1 = tk.Label(w2,text = "Analysed Sentiment",font = ('Bitstream Charter',12,'bold'))
+    wlb1.pack(padx = 2,pady = 5)
+
+    # final detailed label
+
+    # ending of the window
+    w2.mainloop()
 
 def dark_mode():
 
