@@ -173,7 +173,6 @@ chb1.pack(side = 'left',padx = 4,pady = 1)
 # creating a button here
 btn1 = tk.Button(w1,text = 'Submit Text to Analyse',border = None,command = doThis)
 btn1.pack(side = 'right',padx = 4,pady = 1)
-print(textual_content)
 
 # timer for reseting window from user interaction
 def reset_window_time(event = None):
