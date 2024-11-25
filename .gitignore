@@ -1,0 +1,7 @@
+# some ignorable files at the starting time
+main.spec
+
+# some ignorable folders
+build
+dist
+main.spec
